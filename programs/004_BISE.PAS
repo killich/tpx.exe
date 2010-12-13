@@ -26,7 +26,7 @@ begin
 
      repeat
            x:=(a+b)/2;
-           IF funct(a)*funct(b) < 0 THEN
+           IF funct(a)*funct(b) <= 0 THEN
            begin
               b:=x;
            end
@@ -36,8 +36,9 @@ begin
            end;
 	   stop:=stop+1;
 	   if stop>100 then break;
+     {b-a<epsilon}
      until abs(funct(x)) < epsilon;
-
+      {x:=(b+a)/2;}
      WriteLn('x = ', x:8:4);
      WriteLn('f(x) = ', funct(x):8:4);
 
