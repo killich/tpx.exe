@@ -1,0 +1,38 @@
+Program Metod_Gauss;
+
+const {Enter A & B}
+n=3;  {Razmernost}
+A:array[1..n,1..n] of real=((2.5,6.8,-1.1),(2.7,-0.6,1.5),(5.4,-2.4,3.8));
+B:array[1..n] of real=(4.3,-3.5,5.3);
+
+var
+X:array[1..n] of real;   {massiv korney X}
+i,j,k:integer;        {Vnutrennie peremennie ciclov}
+sum:real;
+F:array[1..n,1..n+1] of real; {Promejutochnie znachenia F}
+
+begin
+  for k:=1 to n do
+  begin
+   for j:=k to n do
+   F[k,j]:=-A[k,j]/A[k,k];
+  F[k,n+1]:=-B[k]/A[k,k];
+   for i:=k+1 to n do
+   begin
+    for j:=k+1 to n do
+    A[i,j]:=A[i,j]+A[i,k]*F[k,j];
+   B[i]:=B[i]+A[i,k]*F[k,n+1];
+   end;
+  end;
+  for i:=n downto 1 do
+  begin
+   for j:=n downto 2 do
+   sum:=sum+F[i,j]*X[j];
+  X[i]:=sum-F[i,n+1];
+  sum:=0
+  end;
+for i:=1 to n do
+writeln ('X',i,'=',X[i]);
+end.
+
+

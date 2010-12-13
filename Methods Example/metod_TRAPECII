@@ -1,0 +1,38 @@
+Program Calculation_Integral;
+{Vichislenie integrala metodom Terapecii.}
+{Dano: vichislit integral ot -3 do 0 dx/(4+x*x). Tochnost E=0.001}
+
+const
+a=-3;
+b=0; {a i b - predeli integrirovania}
+e=0.001; {tochnost vichislenia epsilon}
+
+var
+X:array[0..100] of real; {massiv X}
+n,k:integer;        {Vnutrennie peremennie ciclov}
+sum,S1,S2,h:real;
+
+function Fun (x:real):real; {vozvedenie X v stepen i}
+begin
+Fun:=1/(4+x*x);
+end;
+
+begin
+ n:=1; {nashalnoe kollichestvo trapecii}
+ h:=(b-a)/n;
+ S2:=h*(Fun(a)+Fun(b))/2;
+ Repeat
+ S1:=S2;
+ n:=n+1;
+ h:=(b-a)/n;
+ for k:=0 to n do
+ X[k]:=a+k*h;
+ sum:=(Fun(a)+Fun(b))/2;
+ for k:=1 to n-1 do
+ sum:=sum+Fun(X[k]);
+ S2:=h*sum;
+ Until Abs(S2-S1)<e;
+ writeln('S=',S2);
+end.
+
+

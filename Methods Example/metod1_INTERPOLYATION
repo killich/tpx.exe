@@ -1,0 +1,25 @@
+Program Metod_Kysochno_lineinoy_Interpolacii;
+{Interpolirovanie funkcii metodom Kusochno-Lineinoy Interpolacii}
+{Dano: znachenia funkcii v 7 tochkax. Nujno naiti priamie, kotorii opisivaet}
+{etu funkciu.}
+
+const {Enter X & Y}
+n=7; {Razmernost}
+X:array[1..n] of real=(0.13,0.8,1.47,2.14,2.81,3.48,4.15);
+Y:array[1..n] of real=(-63.2175,52.5028,26.714,23.3521,106.899,233.13,411.249);
+
+var
+K:array[1..n] of real; {massiv koefficientov K priamich}
+i:integer;        {Vnutrennie peremennie ciclov}
+
+begin
+ for i:=1 to n-1 do
+ begin
+ K[i]:=(Y[i+1]-Y[i])/(X[i+1]-X[i]);
+ writeln(i,' Interval: [',X[i],';',X[i+1],']');
+ if K[i]<0 THEN writeln('Y',i,'=',Y[i],K[i],'*(X-',X[i],')')
+ ELSE writeln('Y',i,'=',Y[i],'+',K[i],'*(X-',X[i],')');
+ end;
+end.
+
+

@@ -1,0 +1,61 @@
+Program Metod_Hord;
+{Vichislenie korney uravnenia metodom Hord}
+{Dano: 2*sqrt(x)-cos(1.57*x)=0 Interval}
+
+const {Enter A & B}
+n=3; {Razmernost}
+X:array[1..n] of real=(0.2,0.25,0.3); {X - tri tochki}
+
+
+var
+AA:array[1..n] of real; {massiv koefficientov Ao,A1 funkcii i t.d. (korni X)}
+A:array[1..n,1..n] of real; {Matrica znachenii X}
+B:array[1..n] of real; {B eto Y}
+i,j,k:integer;        {Vnutrennie peremennie ciclov}
+sum,X1,X2:real;
+F:array[1..n,1..n+1] of real; {Promejutochnie znachenia F}
+
+function Stepen (X:real;j:integer):real; {vozvedenie X v stepen i}
+var
+   m:integer;
+   s:real;
+begin
+ s:=1/X;
+ for m:=1 to j do
+ s:=s*X;
+ Stepen:=s;
+end;
+
+begin
+ for i:=1 to n do
+ B[i]:=2*sqrt(X[i])-cos(1.57*X[i]);
+ for i:=1 to n do
+  for j:=1 to n do
+  A[i,j]:=Stepen(X[i],j); {zanosim znachenia X v A}
+   {Vichislenie metodom Gaussa korney yravnenia}
+  for k:=1 to n do
+  begin
+   for j:=k to n do
+   F[k,j]:=-A[k,j]/A[k,k];
+  F[k,n+1]:=-B[k]/A[k,k];
+   for i:=k+1 to n do
+   begin
+    for j:=k+1 to n do
+    A[i,j]:=A[i,j]+A[i,k]*F[k,j];
+   B[i]:=B[i]+A[i,k]*F[k,n+1];
+   end;
+  end;
+  for i:=n downto 1 do
+  begin
+   for j:=n downto 2 do
+   sum:=sum+F[i,j]*AA[j];
+  AA[i]:=sum-F[i,n+1];
+  sum:=0
+  end;
+  X1:=(-AA[2]+sqrt(sqr(AA[2])-4*AA[1]*AA[3]))/(2*AA[3]);
+  X2:=(-AA[2]-sqrt(sqr(AA[2])-4*AA[1]*AA[3]))/(2*AA[3]);
+  If (X1<=X[3]) and (X1>=X[1]) then writeln('X=',X1);
+  If (X2<=X[3]) and (X2>=X[1]) then writeln('X=',X2);
+end.
+
+
